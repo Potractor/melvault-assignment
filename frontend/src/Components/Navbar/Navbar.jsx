@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 import cart from "../Assets/cart.png";
 import logo from "../Assets/logo.png";
@@ -9,7 +9,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="nav-logo">
         <img src={logo} width="40px" alt="" />
-        <p>SHOPPER</p>
+        <p>MELVAULT</p>
       </div>
       <ul className="nav-menu">
         <li
@@ -17,33 +17,49 @@ const Navbar = () => {
             setMenu("shop");
           }}
         >
-          Shop{menu === "shop" ? <hr /> : <></>}
+          <Link style={{ textDecoration: "none" }} to="/">
+            Shop
+          </Link>{" "}
+          {menu === "shop" ? <hr /> : <></>}
         </li>
         <li
           onClick={() => {
             setMenu("men");
           }}
         >
-          Men {menu === "men" ? <hr /> : <></>}
+          <Link style={{ textDecoration: "none" }} to="/mens">
+            Men
+          </Link>{" "}
+          {menu === "men" ? <hr /> : <></>}
         </li>
         <li
           onClick={() => {
             setMenu("women");
           }}
         >
-          Women{menu === "women" ? <hr /> : <></>}
+          <Link style={{ textDecoration: "none" }} to="/women">
+            Women
+          </Link>
+          {menu === "women" ? <hr /> : <></>}
         </li>
         <li
           onClick={() => {
             setMenu("kids");
           }}
         >
-          Kids{menu === "kids" ? <hr /> : <></>}
+          <Link style={{ textDecoration: "none" }} to="/kids">
+            Kids
+          </Link>
+          {menu === "kids" ? <hr /> : <></>}
         </li>
       </ul>
       <div className="nav-login-cart">
-        <button>Login</button>
-        <img src={cart} width="40px" alt="" />
+        <Link to="/login">
+          <button>Login</button>
+        </Link>
+        <Link to="/cart">
+          <img src={cart} width="40px" alt="" />
+        </Link>
         <div className="nav-cart-count">0</div>
       </div>
     </div>
