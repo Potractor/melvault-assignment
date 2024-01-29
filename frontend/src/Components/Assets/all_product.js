@@ -33,7 +33,7 @@ import p32_img from "./kids/p32_img.jpg";
 import p33_img from "./kids/p33_img.jpg";
 import p34_img from "./kids/p34_img.jpg";
 import p35_img from "./kids/p35_img.jpg";
-import p36_img from "./kids/p36_img.jpgl̥";
+import p36_img from "./kids/p36_img.jpg";
 
 let all_product = [
   {
