@@ -56,9 +56,6 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="nav-login-cart">
-        <Link to="/login">
-          <button>Login</button>
-        </Link>
         <Link to="/cart">
           <img src={cart} width="40px" alt="" />
         </Link>

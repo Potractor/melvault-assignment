@@ -1,0 +1,31 @@
+.shipping {
+  margin: 100px 170px;
+}
+
+/* Add this to your stylesheet or component */
+.address-item {
+  margin-bottom: 10px;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Optional: Style the selected label differently */
+input[type="radio"]:checked + label {
+  font-weight: bold;
+  color: #007bff; /* You can choose your desired color */
+}
+
+h2 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.placeorder {
+  margin: 100px;
+  margin-right: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
