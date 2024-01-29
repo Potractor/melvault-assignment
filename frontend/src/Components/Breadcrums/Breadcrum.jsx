@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { ShopContext } from "../../Context/ShopContext";
 const Breadcrum = ({ product, productID }) => {
   const [addtocart, setAddToCart] = useState("Add to Cart");
-  console.log(product.image);
+  console.log(product);
   const { addToCart, cartItems } = useContext(ShopContext);
   useEffect(() => {
     if (cartItems[productID] > 0) setAddToCart("Added to Cart");
@@ -22,15 +22,26 @@ const Breadcrum = ({ product, productID }) => {
         <p>{product.name}</p>
         <p className="text2">Rs. {product.new_price} /-</p>
         <p className="text2-light">{product.old_price}</p>
-        <button
-          onClick={() => {
-            addToCart(product.id);
-            setAddToCart("Added to Cart");
-          }}
-          className="add_to_cart"
-        >
-          {addtocart}
-        </button>
+        {product.available && (
+          <button
+            onClick={() => {
+              addToCart(product.id);
+              setAddToCart("Added to Cart");
+            }}
+            className="add_to_cart"
+          >
+            {addtocart}
+          </button>
+        )}
+        {!product.available && (
+          <button
+            style={{ cursor: "none" }}
+            className="add_to_cart"
+            disabled={true}
+          >
+            not available
+          </button>
+        )}
       </div>
     </div>
   );

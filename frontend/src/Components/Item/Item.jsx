@@ -17,6 +17,14 @@ const Item = (props) => {
       <div className="item-prices">
         <div className="item_price-new">Rs.{props.new_price}/-</div>
         <div className="item_price-old">{props.old_price}</div>
+        <div
+          className="box"
+          style={{
+            backgroundColor: `${props.availability ? "lightgreen" : "red"}`,
+          }}
+        >
+          {props.availability ? <p>available</p> : <p>not available</p>}
+        </div>
       </div>
     </div>
   );
