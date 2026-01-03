@@ -2,30 +2,33 @@ import React, { useEffect } from "react";
 import "./Breadcrum.css";
 import { useContext, useState } from "react";
 import { ShopContext } from "../../Context/ShopContext";
-const Breadcrum = ({ product, productID }) => {
+const Breadcrum = ({ product, productId }) => {
   const [addtocart, setAddToCart] = useState("Add to Cart");
-  console.log(product);
+
   const { addToCart, cartItems } = useContext(ShopContext);
-  useEffect(() => {
-    if (cartItems[productID] > 0) setAddToCart("Added to Cart");
-    else setAddToCart("Add to Cart");
-  }, []);
-  console.log(productID);
+  // useEffect(() => {
+  //   if (cartItems[productId] > 0) setAddToCart("Added to Cart");
+  //   else setAddToCart("Add to Cart");
+  // }, []);
   return (
     <div className="breadcrum">
       <div>
-        <img className="image1" src={product.image} alt="not-found" />{" "}
-        <p>{product.name}</p>
+        <img
+          className="image1"
+          src={product?.files[0].fileUrl}
+          alt="not-found"
+        />{" "}
+        <p>{product?.name}</p>
       </div>
 
       <div className="text1">
-        <p>{product.name}</p>
-        <p className="text2">Rs. {product.new_price} /-</p>
-        <p className="text2-light">{product.old_price}</p>
-        {product.available && (
+        <p>{product?.name}</p>
+        <p className="text2">Rs. {product?.newPrice} /-</p>
+        <p className="text2-light">{product?.oldPrice}</p>
+        {product?.available && (
           <button
             onClick={() => {
-              addToCart(product.id);
+              addToCart(product?.id);
               setAddToCart("Added to Cart");
             }}
             className="add_to_cart"
@@ -33,7 +36,7 @@ const Breadcrum = ({ product, productID }) => {
             {addtocart}
           </button>
         )}
-        {!product.available && (
+        {!product?.available && (
           <button
             style={{ cursor: "none" }}
             className="add_to_cart"

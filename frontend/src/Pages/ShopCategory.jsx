@@ -1,30 +1,47 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./CSS/ShopCategory.css";
 import { ShopContext } from "../Context/ShopContext";
 import Item from "../Components/Item/Item";
-const ShopCategory = (props) => {
-  const { all_product } = useContext(ShopContext);
-
+import { getProductsByCategory } from "../apis/product";
+import Loader from "../Components/Loader/Loader";
+const ShopCategory = ({ category }) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const fetchProducts = async () => {
+    setLoading(true);
+    getProductsByCategory(category)
+      .then((resp) => {
+        setData(resp);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, [category]);
   return (
-    <div className="shop-category">
-      <div className="shopcategory-products">
-        {all_product.map((item, i) => {
-          if (props.category === item.category) {
-            return (
-              <Item
-                id={item.id}
-                name={item.name}
-                image={item.image}
-                new_price={item.new_price}
-                old_price={item.old_price}
-                availability={item.available}
-              />
-            );
-          } else {
-            return null;
-          }
-        })}
-      </div>
+    <div className="d-flex flex-column align-items-center">
+      {!loading && (
+        <div className="shopcategory-products">
+          {data?.map((item) => (
+            <Item
+              id={item.id}
+              name={item.name}
+              image={item.files[0]?.fileUrl}
+              newPrice={item.newPrice}
+              oldPrice={item.oldPrice}
+              availability={item.available}
+            />
+          ))}
+        </div>
+      )}
+      {loading && (
+        <div>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };

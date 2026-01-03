@@ -10,13 +10,14 @@ const Item = (props) => {
           style={{ width: "250px", height: "400px" }}
           src={props.image}
           alt=""
+          loading="lazy"
         />
       </Link>
 
       <p>{props.name}</p>
       <div className="item-prices">
-        <div className="item_price-new">Rs.{props.new_price}/-</div>
-        <div className="item_price-old">{props.old_price}</div>
+        <div className="item_price-new">Rs.{props.newPrice}/-</div>
+        <div className="item_price-old">{props.oldPrice}</div>
         <div
           className="box"
           style={{
