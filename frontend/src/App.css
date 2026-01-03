@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+div {
+  padding: 2px;
+}
+
+.form-check-input {
+}

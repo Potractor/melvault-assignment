@@ -1,0 +1,12 @@
+.ok {
+  border: 0.5px solid floralwhite;
+  border-radius: 5px;
+  padding: 0;
+  box-shadow: 1px 1px 0px 0px;
+}
+
+.ok > div {
+  border: 1px solid lightblue;
+  padding: 5px;
+  background-color: white;
+}
