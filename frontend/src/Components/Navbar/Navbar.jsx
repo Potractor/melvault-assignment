@@ -1,15 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "./Navbar.css";
-import cart from "../Assets/cart.png";
+import cartImage from "../Assets/cartImage.png";
 import logo from "../Assets/logo.png";
 import { ShopContext } from "../../Context/ShopContext";
 import Footer from "../Footer/Footer";
 import Settings from "../Settings/Settings";
 const Navbar = ({ authenticated }) => {
-  const location = useLocation();
   const [menu, setMenu] = useState("shop");
-  const { getTotalCartItems } = useContext(ShopContext);
+  const { getTotalCartItems, cart } = useContext(ShopContext);
   return (
     <>
       <div className="navbar">
@@ -64,7 +63,7 @@ const Navbar = ({ authenticated }) => {
             <div className="d-flex">
               <div className="nav-login-cart">
                 <Link to="/cart">
-                  <img src={cart} width="40px" alt="" />
+                  <img src={cartImage} width="40px" alt="" />
                 </Link>
                 <div className="nav-cart-count">{getTotalCartItems()}</div>
               </div>

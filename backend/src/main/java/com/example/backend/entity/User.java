@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 @Getter
@@ -33,6 +34,8 @@ public class User {
   joinColumns  = @JoinColumn(name = "user_id", referencedColumnName = "id"),
   inverseJoinColumns =  @JoinColumn(name = "roled_id " , referencedColumnName= "id")
   )
-  
   private Set<Role>roles;
+  @JsonManagedReference
+  @OneToOne(mappedBy="user",cascade=CascadeType.ALL)
+  private Cart cart;
 }

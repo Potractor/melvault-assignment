@@ -5,21 +5,18 @@ import ProductDisplay from "../Components/ProductDisplay/ProductDisplay";
 import { getProductsById } from "../apis/product";
 const Product = () => {
   const { productId } = useParams();
-  console.log(productId);
+
   const [product, setProduct] = useState(null);
   const fetchProduct = async () => {
     getProductsById(productId)
       .then((resp) => {
-        console.log(resp);
         setProduct(resp);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  console.log(product);
   useEffect(() => {
-    console.log("came here");
     fetchProduct();
   }, [productId]);
   return (

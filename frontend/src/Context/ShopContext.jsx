@@ -1,63 +1,66 @@
-import React, { useState, createContext, useEffect } from "react";
-import all_product from "../Components/Assets/all_product";
+import React, { useState, createContext } from "react";
+import { addProductToCart, updateCart } from "../apis/cart";
 export const ShopContext = createContext(null);
-const getDefaultCart = () => {
-  let cart = {};
-  for (let index = 0; index < 300 + 1; index++) {
-    cart[index] = 0;
-  }
-  return cart;
-};
+
 const ShopContextProvider = (props) => {
-  // const [all_product, setAll_Product] = useState([]);
-  const [cartItems, setCartItems] = useState(getDefaultCart());
-
-  // useEffect(() => {
-
-  //   fetch("http://localhost:4000/allproducts")
-  //     .then((response) => response.json())
-  //     .then((data) => setAll_Product(data));
-  // }, []);
-  const addToCart = (itemId) => {
-    console.log(cartItems);
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+  const [cart, setCart] = useState([]);
+  const cartItems = cart?.items;
+  const increaseItemCount = (itemId) => {
+    let tempItems = cartItems.map((item) =>
+      item.id === itemId ? { ...item, count: item.count + 1 } : item
+    );
+    updateCart({ ...cart, items: tempItems })
+      .then((resp) => {
+        setCart(resp);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+  const decreaseItemCount = async (itemId) => {
+    let tempItems = cartItems.reduce((temp, item) => {
+      if (item.id === itemId) {
+        if (item.count > 1) temp.push({ ...item, count: item.count - 1 });
+      } else temp.push(item);
+      return temp;
+    }, []);
+    updateCart({ ...cart, items: tempItems })
+      .then((resp) => {
+        setCart(resp);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-  const getDefault = () => {
-    setCartItems(getDefaultCart());
-  };
-  const getTotalCartAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        let itemInfo = all_product.find(
-          (product) => product.id === Number(item)
-        );
-        totalAmount += itemInfo.new_price * cartItems[item];
-      }
-    }
 
-    return totalAmount;
+  const addToCart = async (id) => {
+    let ret;
+    addProductToCart(id, cart?.id)
+      .then((resp) => {
+        ret = resp;
+        setCart(resp);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    return ret;
   };
   const getTotalCartItems = () => {
-    let totalItem = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        totalItem += cartItems[item];
-      }
-    }
-    return totalItem;
+    return cart?.items?.length || 0;
   };
   const contextValue = {
-    getDefault,
     getTotalCartItems,
-    getTotalCartAmount,
-    all_product,
-    cartItems,
+    // getTotalCartAmount,
+    // all_product,
+    // cartItems,
     addToCart,
-    removeFromCart,
+    // setCartItems,
+    // removeFromCart,
+    increaseItemCount,
+    decreaseItemCount,
+    cart,
+    setCart,
+    cartItems,
   };
   return (
     <ShopContext.Provider value={contextValue}>
