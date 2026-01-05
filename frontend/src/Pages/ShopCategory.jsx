@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./CSS/ShopCategory.css";
 import { ShopContext } from "../Context/ShopContext";
+import { AuthContext } from "../Context/AuthContext";
 import Item from "../Components/Item/Item";
 import { getProductsByCategory } from "../apis/product";
 import Loader from "../Components/Loader/Loader";
+import { getCartByUserId } from "../apis/cart";
 const ShopCategory = ({ category }) => {
+  const { userDetails } = useContext(AuthContext);
+  const { setCart } = useContext(ShopContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const fetchProducts = async () => {
@@ -18,8 +22,16 @@ const ShopCategory = ({ category }) => {
         setLoading(false);
       });
   };
+  const createNewCart = async () => {
+    getCartByUserId(userDetails?.id)
+      .then((resp) => {
+        setCart(resp);
+      })
+      .catch((error) => console.error(error));
+  };
   useEffect(() => {
     fetchProducts();
+    createNewCart();
   }, [category]);
   return (
     <div className="d-flex flex-column align-items-center">
@@ -27,6 +39,7 @@ const ShopCategory = ({ category }) => {
         <div className="shopcategory-products">
           {data?.map((item) => (
             <Item
+              key={item.id}
               id={item.id}
               name={item.name}
               image={item.files[0]?.fileUrl}

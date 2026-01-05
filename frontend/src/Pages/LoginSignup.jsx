@@ -7,31 +7,35 @@ import Navbar from "../Components/Navbar/Navbar";
 import { AuthContext } from "../Context/AuthContext";
 import Loader from "../Components/Loader/Loader";
 import { useNavigate } from "react-router-dom";
+import { getUserInfoDetails } from "../apis/user";
+import { ShopContext } from "../Context/ShopContext";
 const LoginSignup = () => {
   const navigate = useNavigate();
-  const { storeUserDetails, setAuthenticated } = useContext(AuthContext);
+  const { storeUserDetails, setAuthenticated, storeRoles, authenticated } =
+    useContext(AuthContext);
+  const { setCart } = useContext(ShopContext);
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [viewPassword, setViewPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setAuthenticated(true);
-      navigate("/", { replace: true });
-    }
-  }, []);
-  const submitHandler = (e) => {
+    if (authenticated) navigate("/", { replace: true });
+  }, [authenticated]);
+  const submitHandler = async (e) => {
     setLoading(true);
     e.preventDefault();
-    login({ usernameOrEmail: username, password })
-      .then((resp) => {
-        storeUserDetails(resp);
-        navigate("/", { replace: true });
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const resp = await login({ usernameOrEmail: username, password });
+      storeUserDetails(resp);
+      const response = await getUserInfoDetails(resp.data.userdetails?.id);
+      await storeRoles(response);
+      await setCart(response.cart);
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
   if (loading)
     return (

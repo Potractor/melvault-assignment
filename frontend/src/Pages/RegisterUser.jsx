@@ -17,7 +17,6 @@ const RegisterUser = () => {
     register({ name, username, email, password })
       .then((resp) => storeUserDetails(resp))
       .catch((err) => console.error(err));
-    console.log("submitted");
   };
   return (
     <>

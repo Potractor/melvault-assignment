@@ -4,15 +4,15 @@ import { useContext, useState } from "react";
 import remove from "../Assets/remove.png";
 import add from "../Assets/add.png";
 import { ShopContext } from "../../Context/ShopContext";
-import CartTotalItems from "./CartTotalItems";
 const CartItems = (product) => {
   const {
+    cart,
+    cartItems,
     getDefault,
     getTotalCartAmount,
     all_product,
-    cartItems,
-    removeFromCart,
-    addToCart,
+    increaseItemCount,
+    decreaseItemCount,
   } = useContext(ShopContext);
 
   return (
@@ -27,44 +27,38 @@ const CartItems = (product) => {
         <p>Add</p>
       </div>
       <hr />
-      {all_product.map((e) => {
-        if (cartItems[e.id] > 0) {
-          console.log(e.id);
-          return (
-            <div>
-              <div className="cartitems-format cartitems-format-main">
-                <img src={e.image} alt="" className="carticon-product-icon" />
-                <p>{e.newPrice}</p>
-                <p>{e.name}</p>
-                <button className="cartitems-quantity">
-                  {cartItems[e.id]}
-                </button>
-                <p>{e.newPrice * cartItems[e.id]}</p>
+      {cartItems.map((e) => {
+        return (
+          <div key={e.id}>
+            <div className="cartitems-format cartitems-format-main">
+              <img src={e.imageUrl} alt="" className="carticon-product-icon" />
+              <p>{e.price}</p>
+              <p>{e.name}</p>
+              <button className="cartitems-quantity">{e.count}</button>
+              <p>{e.price * e.count}</p>
 
-                <img
-                  style={{ width: "20px" }}
-                  src={remove}
-                  onClick={() => {
-                    removeFromCart(e.id);
-                  }}
-                  alt=""
-                  className=""
-                />
-                <img
-                  style={{ width: "20px" }}
-                  src={add}
-                  onClick={() => {
-                    addToCart(e.id);
-                  }}
-                  alt=""
-                  className=""
-                />
-              </div>
-              <hr />
+              <img
+                style={{ width: "20px" }}
+                src={remove}
+                onClick={() => {
+                  decreaseItemCount(e.id);
+                }}
+                alt=""
+                className=""
+              />
+              <img
+                style={{ width: "20px" }}
+                src={add}
+                onClick={() => {
+                  increaseItemCount(e.id);
+                }}
+                alt=""
+                className=""
+              />
             </div>
-          );
-        }
-        return null;
+            <hr />
+          </div>
+        );
       })}
     </div>
   );

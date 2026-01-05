@@ -9,7 +9,6 @@ const Address = () => {
   const [address, setAddress] = useState([]);
   const submitHandler = (shippingdetails) => {
     setAddress([...address, `address${address.length + 1}`]);
-    console.log(shippingdetails);
   };
   useEffect(() => {
     setAddress(["address1"]);

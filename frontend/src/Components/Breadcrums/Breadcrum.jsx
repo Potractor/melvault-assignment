@@ -5,7 +5,7 @@ import { ShopContext } from "../../Context/ShopContext";
 const Breadcrum = ({ product, productId }) => {
   const [addtocart, setAddToCart] = useState("Add to Cart");
 
-  const { addToCart, cartItems } = useContext(ShopContext);
+  const { addToCart, cart } = useContext(ShopContext);
   // useEffect(() => {
   //   if (cartItems[productId] > 0) setAddToCart("Added to Cart");
   //   else setAddToCart("Add to Cart");

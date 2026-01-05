@@ -21,7 +21,6 @@ export const getProductsByCategory  = async (category) => {
   }
 }
 export const getProductsById  = async (id) => {
-  console.log(id)
   try {
     const response = await axiosInstance.get(`product/${id}`)
     return Promise.resolve(response.data)
