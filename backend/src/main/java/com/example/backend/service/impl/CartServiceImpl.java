@@ -40,14 +40,18 @@ public class CartServiceImpl implements CartService {
     cart.getItems().forEach(item->{
       Item currItem = new Item();
       currItem.setCart(currCart);
+      if(item.getCount() == -1)
+        currItem.setCart(null);
       currItem.setCount(item.getCount());
       currItem.setId(item.getId());
       currItem.setImageUrl(item.getImageUrl());
       currItem.setName(item.getName());
       currItem.setPrice(item.getPrice());
       currItem.setProductId(item.getProductId());
+      if(item.getCount() != -1) {
       Item savedItem = itemRepository.save(currItem);
       currItems.add(savedItem);
+      }
     });
     currCart.setItems(currItems);
     return cartRepository.save(currCart);

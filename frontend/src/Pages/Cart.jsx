@@ -20,7 +20,7 @@ const Cart = () => {
   return (
     <div>
       <CartItems />
-      {/* <CartTotalItems Cart={true} /> */}
+      <CartTotalItems Cart={true} />
     </div>
   );
 };

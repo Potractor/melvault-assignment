@@ -24,6 +24,35 @@ public class UserController {
   public ResponseEntity<UserInfoDto> getUserById(@PathVariable Long id) { 
     return new ResponseEntity<>(userService.getUserById(id),HttpStatus.OK);
   }
+  @GetMapping("{id}/favourites")
+  public ResponseEntity<Object> getUserFavouritesById(@PathVariable Long id) { 
+    return new ResponseEntity<>(userService.getUserFavouritesById(id),HttpStatus.OK);
+  }
+  @GetMapping("{id}/favourites-info")
+  public ResponseEntity<Object> getUserFavouritesInfoById(@PathVariable Long id) { 
+    return new ResponseEntity<>(userService.getUserFavouritesInfo(id),HttpStatus.OK);
+  }
+  
+  @PostMapping("{id}/add-favourites/{productId}/product")
+  public ResponseEntity<String> addProductToFavourites(@PathVariable Long id, @PathVariable Long productId){
+    try { 
+    userService.addProductToFavourites(id,productId);
+    return new ResponseEntity<>("Added successfully",HttpStatus.OK);
+    }
+    catch (Exception e) { 
+      return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+  @PostMapping("{id}/remove-favourites/{productId}/product")
+  public ResponseEntity<String> deleteProductFromFavourites(@PathVariable Long id, @PathVariable Long productId){
+    try { 
+    userService.removeProductFromFavourites(id,productId);
+    return new ResponseEntity<>("Added successfully",HttpStatus.OK);
+    }
+    catch (Exception e) { 
+      return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
   
   @PostMapping("/{id}/empty-cart")
   public ResponseEntity<String> emptyCartById(@PathVariable Long id) { 

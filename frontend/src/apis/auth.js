@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:8080/api/auth"
+const BASE_URL = "http://localhost:8081/api/auth"
 const urls = {
   register: "/register",
   login: "/login"

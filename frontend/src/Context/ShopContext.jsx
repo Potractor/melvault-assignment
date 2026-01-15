@@ -1,10 +1,22 @@
 import React, { useState, createContext } from "react";
 import { addProductToCart, updateCart } from "../apis/cart";
+import { addProductToFavourites, getUserFavourites } from "../apis/user";
 export const ShopContext = createContext(null);
 
 const ShopContextProvider = (props) => {
   const [cart, setCart] = useState([]);
   const cartItems = cart?.items;
+  const [userFavourites, setUserFavourites] = useState([]);
+  const addToFavourites = async (id, productId) => {
+    try {
+      await addProductToFavourites(id, productId);
+      const response = await getUserFavourites(id);
+      console.log(response);
+      setUserFavourites(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const increaseItemCount = (itemId) => {
     let tempItems = cartItems.map((item) =>
       item.id === itemId ? { ...item, count: item.count + 1 } : item
@@ -20,7 +32,9 @@ const ShopContextProvider = (props) => {
   const decreaseItemCount = async (itemId) => {
     let tempItems = cartItems.reduce((temp, item) => {
       if (item.id === itemId) {
-        if (item.count > 1) temp.push({ ...item, count: item.count - 1 });
+        item.count === 1
+          ? temp.push({ ...item, count: -1 })
+          : temp.push({ ...item, count: item.count - 1 });
       } else temp.push(item);
       return temp;
     }, []);
@@ -46,11 +60,16 @@ const ShopContextProvider = (props) => {
     return ret;
   };
   const getTotalCartItems = () => {
-    return cart?.items?.length || 0;
+    return cartItems?.length || 0;
+  };
+  const getTotalCartAmount = () => {
+    return cartItems.reduce((sum, item) => {
+      return sum + item.count * item.price;
+    }, 0);
   };
   const contextValue = {
     getTotalCartItems,
-    // getTotalCartAmount,
+    getTotalCartAmount,
     // all_product,
     // cartItems,
     addToCart,
@@ -61,6 +80,9 @@ const ShopContextProvider = (props) => {
     cart,
     setCart,
     cartItems,
+    setUserFavourites,
+    addToFavourites,
+    userFavourites,
   };
   return (
     <ShopContext.Provider value={contextValue}>

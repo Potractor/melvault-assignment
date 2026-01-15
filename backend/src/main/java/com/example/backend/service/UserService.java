@@ -8,4 +8,8 @@ public interface UserService {
   public void emptyCartById(Long id);
   public Cart createCartById(Long id);
   public Cart getCartById(Long userId);
+  public Object addProductToFavourites(Long id, Long productId);
+  public Object getUserFavouritesById(Long id);
+  Object getUserFavouritesInfo(Long id);
+  public void removeProductFromFavourites(Long id, Long productId);
 }

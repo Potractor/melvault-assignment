@@ -1,6 +1,7 @@
 package com.example.backend.dto;
 import java.util.Set;
 import com.example.backend.entity.Cart;
+import com.example.backend.entity.Product;
 import com.example.backend.entity.Role;
 import lombok.*;
 @Getter
@@ -14,4 +15,5 @@ public class UserInfoDto {
   private String email;
   private Set<Role> roles;
   private Cart cart;
+  private Set<Long>favourites;
 }
