@@ -1,0 +1,43 @@
+version: "1.1"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/fullstack_db?allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - db
+    networks:
+      - fullstack-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3001:80"
+    environment:
+      VITE_SERVER_URL: http://backend:8081
+    networks:
+      - fullstack-network
+
+  db:
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: fullstack_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - fullstack-network
+
+volumes:
+  db_data:
+
+networks:
+  fullstack-network:
+    driver: bridge
