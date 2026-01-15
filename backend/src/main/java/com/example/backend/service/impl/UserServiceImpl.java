@@ -1,13 +1,17 @@
 package com.example.backend.service.impl;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.backend.dto.UserInfoDto;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.repository.CartRepository;
+import com.example.backend.repository.ProductRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.UserService;
 import com.example.backend.entity.Cart;
+import com.example.backend.entity.Product;
 import com.example.backend.entity.User;
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,6 +20,9 @@ public class UserServiceImpl implements UserService {
   private UserRepository userRepository;
   @Autowired
   private CartRepository cartRepository;
+  @Autowired
+  private ProductRepository productRepository;
+  
   @Override
   public UserInfoDto getUserById(Long id) {
     // TODO Auto-generated method stub
@@ -27,6 +34,7 @@ public class UserServiceImpl implements UserService {
     userInfo.setName(user.getName());
     userInfo.setRoles(user.getRoles());
     userInfo.setUsername(user.getUsername());
+    userInfo.setFavourites(user.getFavourites().stream().map(Product::getId).collect(Collectors.toSet()));
     return userInfo;
   }
   @Override
@@ -58,4 +66,35 @@ public class UserServiceImpl implements UserService {
     userRepository.save(user);
     return savedCart;
   }
+  @Override
+  public Object addProductToFavourites(Long id, Long productId) {
+    // TODO Auto-generated method stub
+    User user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("id not found"));
+    Set<Product> favourites =user.getFavourites();
+    Product product = productRepository.findById(productId).orElseThrow(()-> new ResourceNotFoundException("id not found"));
+    favourites.add(product);
+    user.setFavourites(favourites);
+    User savedUser = userRepository.save(user);
+    return savedUser.getFavourites();
+  }
+  @Override
+  public Object getUserFavouritesById(Long id) {
+    // TODO Auto-generated method stub
+    User user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("id not found"));
+    return user.getFavourites().stream().map(Product::getId).collect(Collectors.toSet());
+  }
+  @Override
+  public Object getUserFavouritesInfo(Long id) { 
+    User user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("id not found"));
+    return user.getFavourites();
+    
+  }
+  @Override
+  public void removeProductFromFavourites(Long id, Long productId) {
+    // TODO Auto-generated method stub
+    
+  }
+  
+  
+
 }

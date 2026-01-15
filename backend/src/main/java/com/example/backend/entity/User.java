@@ -1,5 +1,7 @@
 package com.example.backend.entity;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -28,6 +30,11 @@ public class User {
 //  inverseJoinColumns = @JoinColumn(name = "role_id" , referencedColumnName= "id")
 //  )
 //  private Set<Role> roles;
+  
+  @ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinTable(name="user_favourites", joinColumns= @JoinColumn(name="user_id",referencedColumnName="id"),
+  inverseJoinColumns = @JoinColumn(name="product_id", referencedColumnName = "id"))
+  private Set<Product> favourites = new HashSet<>();
   
   @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
   @JoinTable(name = "users_roles" ,

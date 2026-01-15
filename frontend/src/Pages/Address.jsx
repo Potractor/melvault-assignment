@@ -3,6 +3,7 @@ import "./CSS/Address.css";
 import { Link } from "react-router-dom";
 import Popup from "../Components/Popup/Popup";
 import { ShopContext } from "../Context/ShopContext";
+import Razorpay from "../Components/payments/Razorpay";
 const Address = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
   const { getDefault } = useContext(ShopContext);
@@ -57,6 +58,7 @@ const Address = () => {
         />
         Cash On Delivery
       </label>
+      <Razorpay />
       <div className="placeorder">
         <Link to="/">
           <button

@@ -14,8 +14,6 @@ import com.example.backend.mapper.FileMapper;
 import com.example.backend.repository.FileRepository;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.service.FileService;
-import software.amazon.awssdk.*;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;

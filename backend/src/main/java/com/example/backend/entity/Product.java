@@ -2,6 +2,8 @@ package com.example.backend.entity;
 
 import lombok.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -22,6 +24,7 @@ public class Product {
   private Boolean available;
 
   // each product can have multiple files
+  @JsonManagedReference
   @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
   private List<File> files;
 

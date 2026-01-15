@@ -13,7 +13,7 @@ const CartTotalItems = (props) => {
           <div>
             <div className="cartitems-total-item">
               <p>subtotal</p>
-              {/* <p>Rs.{getTotalCartAmount?.()}</p> */}
+              <p>Rs.{getTotalCartAmount?.()}</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
@@ -23,7 +23,7 @@ const CartTotalItems = (props) => {
             <hr />
             <div className="cartitems-total-item">
               <h3>Total</h3>
-              {/* <h3>Rs.{getTotalCartAmount()}</h3> */}
+              <h3>Rs.{getTotalCartAmount()}</h3>
             </div>
           </div>
           {props.Cart && (

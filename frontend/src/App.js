@@ -15,6 +15,7 @@ import { AuthContext } from "./Context/AuthContext";
 import { useContext, useEffect } from "react";
 import AddItem from "./Pages/AddItem";
 import { getAllProducts } from "./apis/product";
+import UserFavourites from "./Pages/UserFavourites";
 function App() {
     const { authenticated,setAuthenticated } = useContext(AuthContext);
     useEffect(()=> { 
@@ -33,7 +34,8 @@ function App() {
   {path: "/product/:productId", element: <Product/>},
   {path: "/cart", element: <Cart/>},
   {path: "/shipping", element: <Shipping/>},
-  {path:"/add-items", element: <AddItem/>}
+  {path:"/add-items", element: <AddItem/>},
+  {path: "/favourites", element: <UserFavourites/>}
   ]},
 {path: "/login", element: <LoginSignup/>},
 {path: "/register", element: <RegisterUser/>},

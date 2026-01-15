@@ -34,9 +34,6 @@ const CartItems = (product) => {
               <img src={e.imageUrl} alt="" className="carticon-product-icon" />
               <p>{e.price}</p>
               <p>{e.name}</p>
-              <button className="cartitems-quantity">{e.count}</button>
-              <p>{e.price * e.count}</p>
-
               <img
                 style={{ width: "20px" }}
                 src={remove}
@@ -46,6 +43,7 @@ const CartItems = (product) => {
                 alt=""
                 className=""
               />
+              <button className="cartitems-quantity">{e.count}</button>
               <img
                 style={{ width: "20px" }}
                 src={add}
@@ -55,6 +53,7 @@ const CartItems = (product) => {
                 alt=""
                 className=""
               />
+              <p>{e.price * e.count}</p>
             </div>
             <hr />
           </div>

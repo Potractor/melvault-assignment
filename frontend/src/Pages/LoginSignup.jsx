@@ -7,13 +7,13 @@ import Navbar from "../Components/Navbar/Navbar";
 import { AuthContext } from "../Context/AuthContext";
 import Loader from "../Components/Loader/Loader";
 import { useNavigate } from "react-router-dom";
-import { getUserInfoDetails } from "../apis/user";
+import { getUserInfoDetails, getUserFavourites } from "../apis/user";
 import { ShopContext } from "../Context/ShopContext";
 const LoginSignup = () => {
   const navigate = useNavigate();
   const { storeUserDetails, setAuthenticated, storeRoles, authenticated } =
     useContext(AuthContext);
-  const { setCart } = useContext(ShopContext);
+  const { setCart, setUserFavourites } = useContext(ShopContext);
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [viewPassword, setViewPassword] = useState(false);
@@ -30,6 +30,8 @@ const LoginSignup = () => {
       const response = await getUserInfoDetails(resp.data.userdetails?.id);
       await storeRoles(response);
       await setCart(response.cart);
+      const favResp = await getUserFavourites(resp.data.userdetails?.id);
+      setUserFavourites(favResp);
       navigate("/", { replace: true });
     } catch (error) {
       console.error(error);
